@@ -18,6 +18,6 @@
         <property name="use_sql_comments">true</property>
 
 
-        <mapping class="Item" />
+        <mapping class="model.Item" />
     </session-factory>
 </hibernate-configuration>

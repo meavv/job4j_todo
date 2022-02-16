@@ -6,7 +6,6 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -23,72 +22,8 @@
     <title>AJAX</title>
 </head>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script>
-    function sendGreeting() {
-        $.ajax({
-            type: 'POST',
-            url: 'http://localhost:8080/job4j_todo/greet',
-            data: JSON.stringify({
-                description: $('#description').val()
-            }),
-            dataType: 'json'
-        }).done(function (data) {
-            $('#descriptionList table:last').append(`<tr>
-                    <td>${item.description}</td>
-                     <td><input type="checkbox" checked></td>
-                     </tr>`)
-        }).fail(function (err) {
-            console.log(err);
-        });
-    }
-
-    $(document).ready(function() {
-        $.ajax({
-            type: 'GET',
-            url: 'http://localhost:8080/job4j_todo/greet',
-            dataType: 'json'
-        }).done(function (data) {
-            for (var item of data) {
-                if (item.done !== true) {
-                    $('#descriptionList table:last').append(
-                        `<tr>
-                    <td>${item.description}</td>
-                     <td><input type="checkbox"></td>
-                     </tr>`)
-                }
-            }
-        }).fail(function (err) {
-            console.log(err);
-        });
-    });
-
-    function ChangeValueProduct() {
-        $.ajax({
-            type: 'GET',
-            url: 'http://localhost:8080/job4j_todo/greet',
-            dataType: 'json'
-        }).done(function (data) {
-            if ($("#check").prop('checked')) {
-                for (var item of data) {
-                    if (item.done === true) {
-                        $('#descriptionList table:last').append(
-                            `<tr>
-                    <td>${item.description}</td>
-                     <td><input type="checkbox" checked></td>
-                     </tr>`)
-                    }
-                }
-            } else {
-                location.reload();
-            }
-        }).fail(function (err) {
-            console.log(err);
-        });
-    }
-
-</script>
+<script src="script.js"></script>
 <body>
-
 
 <div class="container">
     <form>
@@ -98,7 +33,7 @@
                    placeholder="Enter description">
         </div>
         <button type="button" class="btn btn-primary" onclick="sendGreeting()">Submit</button>
-        <input type="checkbox" id="check" onclick="ChangeValueProduct()">Показать все</input>
+        <input type="checkbox" id="check" onclick="filter()">Показать все</input>
     </form>
 
     <br>

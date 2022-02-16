@@ -1,3 +1,5 @@
+package model;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -39,6 +41,10 @@ public class Item {
 
     public boolean isDone() {
         return done;
+    }
+
+    public boolean changeDone() {
+        return !done;
     }
 
     public void setDone(boolean done) {

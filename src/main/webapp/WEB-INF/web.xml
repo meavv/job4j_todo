@@ -6,10 +6,17 @@
   <display-name>Archetype Created Web Application</display-name>
   <servlet>
     <servlet-name>GreetingServlet</servlet-name>
-    <servlet-class>GreetingServlet</servlet-class>
+    <servlet-class>servlet.GreetingServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ChangeStatusServlet</servlet-name>
+    <servlet-class>servlet.ChangeStatusServlet</servlet-class>
   </servlet>
 
-
+  <servlet-mapping>
+    <servlet-name>ChangeStatusServlet</servlet-name>
+    <url-pattern>/changeStatus</url-pattern>
+  </servlet-mapping>
   <servlet-mapping>
     <servlet-name>GreetingServlet</servlet-name>
     <url-pattern>/check</url-pattern>
