@@ -39,7 +39,7 @@ $(document).ready(function() {
             if (item.done !== true) {
                 $('#descriptionList table:last').append(
                     `<tr>
-                    <td>${item.description}</td>
+                    <td id="ids">${item.description}</td>
                      <td><input type="checkbox" onclick="changeStatus()"></td>
                      </tr>`)
             }
