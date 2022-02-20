@@ -6,25 +6,22 @@ function sendGreeting() {
             description: $('#description').val()
         }),
         dataType: 'json'
-    }).done(function (data) {
-        $('#descriptionList table:last').append(`<tr>
-                    <td>${item.description}</td>
-                     <td><input type="checkbox"></td>
-                     </tr>`)
-    }).fail(function (err) {
+    }).done(location.reload()
+    ).fail(function (err) {
         console.log(err);
     });
 }
 
-function changeStatus() {
+function changeStatus(id) {
     $.ajax({
         type: 'PUT',
         url: 'http://localhost:8080/job4j_todo/changeStatus',
         data: JSON.stringify({
-            description: $('#ids').val()
+            id: id
         }),
         dataType: 'json'
-    }).fail(function (err) {
+    }).done(location.reload())
+        .fail(function (err) {
         console.log(err);
     });
 }
@@ -39,8 +36,10 @@ $(document).ready(function() {
             if (item.done !== true) {
                 $('#descriptionList table:last').append(
                     `<tr>
-                    <td id="ids">${item.description}</td>
-                     <td><input type="checkbox" onclick="changeStatus()"></td>
+                    <td>${item.description}</td>
+                     <td>
+                     <input type="checkbox" onchange="changeStatus(${item.id})">
+                     </td>
                      </tr>`)
             }
         }
@@ -61,7 +60,7 @@ function filter() {
                     $('#descriptionList table:last').append(
                         `<tr>
                     <td>${item.description}</td>
-                     <td><input type="checkbox" checked onclick="changeStatus()"></td>
+                     <td><input type="checkbox" checked onchange="changeStatus(${item.id})"></td>
                      </tr>`)
                 }
             }

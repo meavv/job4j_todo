@@ -2,9 +2,6 @@ package servlet;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import liquibase.pro.packaged.D;
-import liquibase.pro.packaged.H;
-
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,8 +13,6 @@ import model.Item;
 import store.Hibernate;
 
 public class GreetingServlet extends HttpServlet {
-
-
 
     private static final Gson GSON = new GsonBuilder().create();
 

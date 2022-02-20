@@ -11,21 +11,22 @@ import java.util.List;
 
 public class Hibernate {
 
-    private  final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
+    private final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
             .configure().build();
-    private  final SessionFactory sf = new MetadataSources(registry)
+
+    private final SessionFactory sf = new MetadataSources(registry)
             .buildMetadata().buildSessionFactory();
 
     public static class Lazy {
         public static final Hibernate HOLDER_INSTANCE = new Hibernate();
     }
 
-    public static Hibernate getInstance() {
-        return Lazy.HOLDER_INSTANCE;
-    }
-
     private Hibernate() {
 
+    }
+
+    public static Hibernate getInstance() {
+        return Lazy.HOLDER_INSTANCE;
     }
 
     public void add(Item item) {
@@ -36,13 +37,22 @@ public class Hibernate {
         session.close();
     }
 
+    public Item findItem(int id) {
+        Session session = sf.openSession();
+        session.beginTransaction();
+        Item item = session.get(Item.class, id);
+        session.getTransaction().commit();
+        session.close();
+        return item;
+    }
+
     public boolean update(Item item) {
         Session session = sf.openSession();
         session.beginTransaction();
-        String hql = "update model.Item set done = :doneParam where description = :descriptionParam";
+        String hql = "update model.Item set done = :doneParam where id = :idParam";
         var query = session.createQuery(hql);
         query.setParameter("doneParam", item.changeDone());
-        query.setParameter("descriptionParam", item.getDescription());
+        query.setParameter("idParam", item.getId());
         int result = query.executeUpdate();
         session.getTransaction().commit();
         session.close();
