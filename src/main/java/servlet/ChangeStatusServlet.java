@@ -21,8 +21,7 @@ public class ChangeStatusServlet extends HttpServlet {
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String readLine = req.getReader().readLine().replaceAll("[^0-9\\+]", "");
         int i = Integer.parseInt(readLine);
-        Item item = Hibernate.getInstance().findItem(i);
-        boolean rsl = Hibernate.getInstance().update(item);
+        boolean rsl = Hibernate.getInstance().update(i);
         System.out.println(rsl);
     }
 }

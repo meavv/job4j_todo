@@ -46,9 +46,11 @@ public class Hibernate {
         return item;
     }
 
-    public boolean update(Item item) {
+    public boolean update(int id) {
         Session session = sf.openSession();
         session.beginTransaction();
+        Item item = session.get(Item.class, id);
+        session.getTransaction().commit();
         String hql = "update model.Item set done = :doneParam where id = :idParam";
         var query = session.createQuery(hql);
         query.setParameter("doneParam", item.changeDone());
