@@ -1,7 +1,7 @@
 function sendGreeting() {
     $.ajax({
         type: 'POST',
-        url: 'http://localhost:8080/job4j_todo/greet',
+        url: 'http://localhost:8081/job4j_todo/greet',
         data: JSON.stringify({
             description: $('#description').val()
         }),
@@ -15,12 +15,12 @@ function sendGreeting() {
 function changeStatus(id) {
     $.ajax({
         type: 'PUT',
-        url: 'http://localhost:8080/job4j_todo/changeStatus',
+        url: 'http://localhost:8081/job4j_todo/changeStatus',
         data: JSON.stringify({
             id: id
         }),
         dataType: 'json'
-    }).done(location.reload())
+    }).done(this.reloadGridData())
         .fail(function (err) {
         console.log(err);
     });
@@ -29,7 +29,7 @@ function changeStatus(id) {
 $(document).ready(function() {
     $.ajax({
         type: 'GET',
-        url: 'http://localhost:8080/job4j_todo/greet',
+        url: 'http://localhost:8081/job4j_todo/greet',
         dataType: 'json'
     }).done(function (data) {
         for (var item of data) {
@@ -51,7 +51,7 @@ $(document).ready(function() {
 function filter() {
     $.ajax({
         type: 'GET',
-        url: 'http://localhost:8080/job4j_todo/greet',
+        url: 'http://localhost:8081/job4j_todo/greet',
         dataType: 'json'
     }).done(function (data) {
         if ($("#check").prop('checked')) {
