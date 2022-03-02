@@ -10,9 +10,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String name;
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
 
+    private String name;
     private String email;
+    private String password;
 
     public String getEmail() {
         return email;
@@ -29,12 +33,6 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    private String password;
-
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role role;
 
     public static User of(String name, String email, String password, Role role) {
         User user = new User();

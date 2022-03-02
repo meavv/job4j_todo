@@ -56,7 +56,6 @@ public class Hibernate {
         tx(session -> (session.save(user)));
     }
 
-
     public Item findItem(int id) {
         return tx(session -> (session.get(Item.class, id)));
     }
@@ -79,7 +78,6 @@ public class Hibernate {
             return null;
         });
     }
-
 
     public boolean update(int id) {
         return tx(session -> {

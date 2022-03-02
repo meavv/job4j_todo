@@ -20,7 +20,7 @@ function changeStatus(id) {
             id: id
         }),
         dataType: 'json'
-    }).done(location.reload())
+    }).done()
         .fail(function (err) {
             console.log(err);
         });
