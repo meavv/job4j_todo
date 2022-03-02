@@ -1,13 +1,17 @@
 package store;
 
 import model.Item;
+import model.Role;
+import model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import java.util.List;
+import java.util.function.Function;
 
 public class Hibernate {
 
@@ -29,43 +33,67 @@ public class Hibernate {
         return Lazy.HOLDER_INSTANCE;
     }
 
-    public void add(Item item) {
-        Session session = sf.openSession();
-        session.beginTransaction();
-        session.save(item);
-        session.getTransaction().commit();
-        session.close();
+    private <T> T tx(final Function<Session, T> command) {
+        final Session session = sf.openSession();
+        final Transaction tx = session.beginTransaction();
+        try {
+            T rsl = command.apply(session);
+            tx.commit();
+            return  rsl;
+        } catch (final Exception e) {
+            session.getTransaction().rollback();
+            throw e;
+        } finally {
+            session.close();
+        }
     }
+
+    public void add(Item item) {
+       tx(session -> (session.save(item)));
+    }
+
+    public void add(User user) {
+        tx(session -> (session.save(user)));
+    }
+
 
     public Item findItem(int id) {
-        Session session = sf.openSession();
-        session.beginTransaction();
-        Item item = session.get(Item.class, id);
-        session.getTransaction().commit();
-        session.close();
-        return item;
+        return tx(session -> (session.get(Item.class, id)));
     }
 
+    public Role findRole(int id) {
+        return tx(session -> (session.get(Role.class, id)));
+    }
+
+    public User findUser(String email) {
+        return tx(session -> {
+            String hql = "select id from model.User where email = :emailParam";
+            var query = session.createQuery(hql);
+            query.setParameter("emailParam", email);
+            var queryList = query.list();
+            if (queryList.size() != 0) {
+                var id = Integer.parseInt(queryList.get(0).toString());
+                System.out.println(id);
+                return session.get(User.class, id);
+            }
+            return null;
+        });
+    }
+
+
     public boolean update(int id) {
-        Session session = sf.openSession();
-        session.beginTransaction();
-        Item item = session.get(Item.class, id);
-        String hql = "update model.Item set done = :doneParam where id = :idParam";
-        var query = session.createQuery(hql);
-        query.setParameter("doneParam", item.changeDone());
-        query.setParameter("idParam", item.getId());
-        int result = query.executeUpdate();
-        session.getTransaction().commit();
-        session.close();
-        return result != 0;
+        return tx(session -> {
+            String hql = "update model.Item set done = :doneParam where id = :idParam";
+            var item = findItem(id);
+            var query = session.createQuery(hql);
+            query.setParameter("doneParam", item.changeDone());
+            query.setParameter("idParam", item.getId());
+            int result = query.executeUpdate();
+            return result != 0;
+        });
     }
 
     public List<Item> findAll() {
-        Session session = sf.openSession();
-        session.beginTransaction();
-        List result = session.createQuery("from model.Item").list();
-        session.getTransaction().commit();
-        session.close();
-        return result;
+        return tx(session -> (session.createQuery("from model.Item").list()));
     }
 }

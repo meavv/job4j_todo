@@ -20,11 +20,12 @@ function changeStatus(id) {
             id: id
         }),
         dataType: 'json'
-    }).done(this.reloadGridData())
+    }).done(location.reload())
         .fail(function (err) {
-        console.log(err);
-    });
+            console.log(err);
+        });
 }
+
 
 $(document).ready(function() {
     $.ajax({

@@ -20,8 +20,8 @@ public class GreetingServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Item item = GSON.fromJson(req.getReader(), Item.class);
         item.setDate(new Date());
-
         Hibernate.getInstance().add(item);
+        System.out.println(req.getMethod());
         resp.setContentType("application/json; charset=utf-8");
         OutputStream output = resp.getOutputStream();
         String json = GSON.toJson(item);

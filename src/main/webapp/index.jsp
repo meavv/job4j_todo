@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <!doctype html>
 <html lang="en">
@@ -26,9 +27,10 @@
 <body>
 
 <div class="container">
+    <a style="float: right" class="nav-link" href="<%=request.getContextPath()%>/logout.do"> <c:out value="${user.name}"/>  | Выйти</a>
+    <a style="float: left" class="nav-link" href="<%=request.getContextPath()%>/login.jsp"> Войти</a>
     <form>
         <div class="form-group">
-            <label for="description">Добавить дело</label>
             <input type="text" class="form-control" id="description" aria-describedby="descriptionHelp"
                    placeholder="Enter description">
         </div>
