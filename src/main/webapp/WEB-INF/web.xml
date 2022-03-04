@@ -20,23 +20,31 @@
     <servlet-name>AuthServlet</servlet-name>
     <servlet-class>servlet.AuthServlet</servlet-class>
   </servlet>
-<!--  <filter>-->
-<!--    <filter-name>AuthFilter</filter-name>-->
-<!--    <filter-class>filter.AuthFilter</filter-class>-->
-<!--  </filter>-->
+  <servlet>
+    <servlet-name>LogoutServlet</servlet-name>
+    <servlet-class>servlet.LogoutServlet</servlet-class>
+  </servlet>
+  <filter>
+    <filter-name>AuthFilter</filter-name>
+    <filter-class>filter.AuthFilter</filter-class>
+  </filter>
 
-<!--  <filter-mapping>-->
-<!--    <filter-name>AuthFilter</filter-name>-->
-<!--    <url-pattern>*.do</url-pattern>-->
-<!--  </filter-mapping>-->
-<!--  <filter-mapping>-->
-<!--    <filter-name>AuthFilter</filter-name>-->
-<!--    <url-pattern>/greet</url-pattern>-->
-<!--  </filter-mapping>-->
-<!--  <filter-mapping>-->
-<!--    <filter-name>AuthFilter</filter-name>-->
-<!--    <url-pattern>/changeStatus</url-pattern>-->
-<!--  </filter-mapping>-->
+  <servlet-mapping>
+    <servlet-name>LogoutServlet</servlet-name>
+    <url-pattern>/logout.do</url-pattern>
+  </servlet-mapping>
+  <filter-mapping>
+    <filter-name>AuthFilter</filter-name>
+    <url-pattern>*.do</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>AuthFilter</filter-name>
+    <url-pattern>/greet</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>AuthFilter</filter-name>
+    <url-pattern>/changeStatus</url-pattern>
+  </filter-mapping>
   <servlet-mapping>
     <servlet-name>AuthServlet</servlet-name>
     <url-pattern>/auth.do</url-pattern>

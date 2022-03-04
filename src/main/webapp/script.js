@@ -41,6 +41,7 @@ $(document).ready(function() {
                      <td>
                      <input type="checkbox" onchange="changeStatus(${item.id})">
                      </td>
+                     <td>${item.user.name}</td>
                      </tr>`)
             }
         }
@@ -62,6 +63,7 @@ function filter() {
                         `<tr>
                     <td>${item.description}</td>
                      <td><input type="checkbox" checked onchange="changeStatus(${item.id})"></td>
+                     <td>${item.user.name}</td>
                      </tr>`)
                 }
             }

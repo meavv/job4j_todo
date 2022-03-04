@@ -46,6 +46,7 @@
                 <tr>
                     <th scope="col">Описание</th>
                     <th scope="col">Статус</th>
+                    <th scope="col">Пользователь</th>
                 </tr>
             </table>
         </form>
