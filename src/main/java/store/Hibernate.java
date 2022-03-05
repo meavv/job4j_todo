@@ -66,16 +66,10 @@ public class Hibernate {
 
     public User findUser(String email) {
         return tx(session -> {
-            String hql = "select id from model.User where email = :emailParam";
+            String hql = "from model.User where email = :emailParam";
             var query = session.createQuery(hql);
             query.setParameter("emailParam", email);
-            var queryList = query.list();
-            if (queryList.size() != 0) {
-                var id = Integer.parseInt(queryList.get(0).toString());
-                System.out.println(id);
-                return session.get(User.class, id);
-            }
-            return null;
+            return (User) query.uniqueResult();
         });
     }
 
