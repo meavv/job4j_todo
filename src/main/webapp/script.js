@@ -3,7 +3,8 @@ function sendGreeting() {
         type: 'POST',
         url: 'http://localhost:8081/job4j_todo/greet',
         data: JSON.stringify({
-            description: $('#description').val()
+            description: $('#description').val(),
+            categories: $('#cIds').val()
         }),
         dataType: 'json'
     }).done(location.reload()
@@ -35,6 +36,16 @@ $(document).ready(function() {
     }).done(function (data) {
         for (var item of data) {
             if (item.done !== true) {
+                let cat = "";
+                let arrayLength = item.categories.length;
+                if (arrayLength !== 0) {
+                    for (let i = 0; i < arrayLength; i++) {
+                        cat = cat + item.categories[i].name
+                        if (i !== arrayLength - 1) {
+                            cat = cat + " / "
+                        }
+                    }
+                }
                 $('#descriptionList table:last').append(
                     `<tr>
                     <td>${item.description}</td>
@@ -42,6 +53,7 @@ $(document).ready(function() {
                      <input type="checkbox" onchange="changeStatus(${item.id})">
                      </td>
                      <td>${item.user.name}</td>
+                     <td>${cat}</td>
                      </tr>`)
             }
         }
@@ -64,6 +76,7 @@ function filter() {
                     <td>${item.description}</td>
                      <td><input type="checkbox" checked onchange="changeStatus(${item.id})"></td>
                      <td>${item.user.name}</td>
+                     <td>${item.categories[0].name}</td>
                      </tr>`)
                 }
             }

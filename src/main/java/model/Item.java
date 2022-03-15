@@ -2,6 +2,8 @@ package model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "items")
@@ -15,9 +17,16 @@ public class Item {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    private final Set<Category> categories = new HashSet<>();
+
     private String description;
     private Date date;
     private boolean done;
+
+    public void addCategory(Category category) {
+        this.categories.add(category);
+    }
 
     public int getId() {
         return id;

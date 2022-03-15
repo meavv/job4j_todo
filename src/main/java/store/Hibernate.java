@@ -1,5 +1,6 @@
 package store;
 
+import model.Category;
 import model.Item;
 import model.Role;
 import model.User;
@@ -39,7 +40,7 @@ public class Hibernate {
         try {
             T rsl = command.apply(session);
             tx.commit();
-            return  rsl;
+            return rsl;
         } catch (final Exception e) {
             session.getTransaction().rollback();
             throw e;
@@ -49,7 +50,20 @@ public class Hibernate {
     }
 
     public void add(Item item) {
-       tx(session -> (session.save(item)));
+        tx(session -> (session.save(item)));
+    }
+
+    public void add(Item item, String[] array) {
+        try {
+            for (String id : array) {
+                Category category = findCategory(Integer.parseInt(id));
+                item.addCategory(category);
+
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        tx(session -> (session.save(item)));
     }
 
     public void add(User user) {
@@ -58,6 +72,10 @@ public class Hibernate {
 
     public Item findItem(int id) {
         return tx(session -> (session.get(Item.class, id)));
+    }
+
+    public Category findCategory(int id) {
+        return tx(session -> (session.get(Category.class, id)));
     }
 
     public Role findRole(int id) {
@@ -87,5 +105,10 @@ public class Hibernate {
 
     public List<Item> findAll() {
         return tx(session -> (session.createQuery("from model.Item").list()));
+    }
+
+    public List<Category> allCategories() {
+        return tx(session -> (session
+                .createQuery("select c from Category c", Category.class)).list());
     }
 }

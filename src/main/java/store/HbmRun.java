@@ -1,18 +1,25 @@
 package store;
 
-import model.Role;
-import model.User;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import model.Category;
+import model.Item;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class HbmRun {
-    public static void main(String[] args) {
 
+    private static final Gson GSON = new GsonBuilder().create();
+
+    public static void main(String[] args) {
+        String s2 = "{\"description\":\"1\",\"categories\":[\"\\\"1\\\"/>\"]}";
+        var s = s2.substring(s2.indexOf("["),
+                s2.indexOf("]")).replaceAll("[\\[\\]|\"|/|>|\\\\\\\\]", "");
+
+        System.out.println(s);
     }
 
     public static <T> T create(T model, SessionFactory sf) {
