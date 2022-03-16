@@ -104,7 +104,9 @@ public class Hibernate {
     }
 
     public List<Item> findAll() {
-        return tx(session -> (session.createQuery("from model.Item").list()));
+        return tx(session -> session.createQuery(
+                "select distinct c from Item c join fetch c.categories").list());
+
     }
 
     public List<Category> allCategories() {

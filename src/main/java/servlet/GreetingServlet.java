@@ -1,7 +1,6 @@
 package servlet;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.google.gson.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -29,16 +28,13 @@ public class GreetingServlet extends HttpServlet {
         HttpSession sc = req.getSession();
         User user = (User) sc.getAttribute("user");
         var s = req.getReader().readLine();
-        System.out.println(s);
-        var ss = Arrays.stream(s.split(",")).toArray();
-        Item item = GSON.fromJson(ss[0] + "}", Item.class);
-        var array = s.substring(s.indexOf("["),
-                s.indexOf("]")).replaceAll("[\\[\\]|\"|/|>|\\\\\\\\]", "").split(",");
+        JsonObject jsonObject = JsonParser.parseString(s).getAsJsonObject();
+        var array = jsonObject.get("categories").getAsString().replaceAll("\\D","")
+                .split("");
+        Item item = GSON.fromJson("{description: " + jsonObject.get("description") + "}", Item.class);
         item.setDate(new Date());
         item.setUser(user);
-        System.out.println(array.length);
         Hibernate.getInstance().add(item, array);
-
         resp.setContentType("application/json; charset=utf-8");
         OutputStream output = resp.getOutputStream();
         String json = GSON.toJson(item);
