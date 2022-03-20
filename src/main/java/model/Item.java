@@ -21,6 +21,8 @@ public class Item {
     private final Set<Category> categories = new HashSet<>();
 
     private String description;
+
+    @Temporal(TemporalType.TIMESTAMP)
     private Date date;
     private boolean done;
 
