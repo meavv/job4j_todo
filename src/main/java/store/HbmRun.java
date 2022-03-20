@@ -1,9 +1,6 @@
 package store;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import model.Category;
 import model.Item;
 import org.hibernate.Session;
@@ -17,34 +14,10 @@ public class HbmRun {
     private static final Gson GSON = new GsonBuilder().create();
 
     public static void main(String[] args) {
-        String s2 = "{\"description\":\"1\",\"categories\":[\"\\\"1\\\"/>2\"]}";
-
-        var jsonElement = JsonParser.parseString(s2).getAsJsonObject();
-        var k  = jsonElement.get("description");
-        System.out.println("description: " + k);
-        Item item = GSON.fromJson("{description: " + k + "}", Item.class);
-        System.out.println(item);
-
-
-
-
-
-
-/**
-        var ss = Arrays.stream(s.split(",")).toArray();
-        Item item = GSON.fromJson(ss[0] + "}", Item.class);
+        String s = "{\"description\":\"1\",\"categories\":[\"\\\"1\\\"/>2\"]}";
         var array = s.substring(s.indexOf("["),
-                s.indexOf("]")).replaceAll("[\\[\\]|\"|/|>|\\\\\\\\]", "").split(",");
- */
-
-
-
-
-
-
-
-
-
+                s.indexOf("]")).replaceAll("\\D", "").split("");
+        System.out.println(Arrays.toString(array));
     }
 
     public static <T> T create(T model, SessionFactory sf) {

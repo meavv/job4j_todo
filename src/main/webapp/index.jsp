@@ -1,5 +1,5 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
-<%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page import="model.Category" %>
 <%@ page import="store.Hibernate" %>
 <!doctype html>
@@ -37,9 +37,9 @@
                    placeholder="Enter description">
         </div>
         <select class="form-control" name="cIds" id="cIds" multiple>
-            <% for (Category category : Hibernate.getInstance().allCategories()) { %>
-            <option value='"<%=category.getId()%>"/>'><%=category.getName()%></option>
-            <% } %>
+            <c:forEach items="${list}" var="category">
+                <option value="${category.id}">${category.name}</option>
+            </c:forEach>
         </select>
         <button type="button" class="btn btn-primary" onclick="sendGreeting()">Submit</button>
         <input type="checkbox" id="check" onclick="filter()">Показать все</input>

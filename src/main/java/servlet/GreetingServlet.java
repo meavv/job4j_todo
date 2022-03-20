@@ -29,9 +29,10 @@ public class GreetingServlet extends HttpServlet {
         User user = (User) sc.getAttribute("user");
         var s = req.getReader().readLine();
         JsonObject jsonObject = JsonParser.parseString(s).getAsJsonObject();
-        var array = jsonObject.get("categories").getAsString().replaceAll("\\D","")
-                .split("");
-        Item item = GSON.fromJson("{description: " + jsonObject.get("description") + "}", Item.class);
+        var array = s.substring(s.indexOf("["), s.indexOf("]"))
+                .replaceAll("\\D", "").split("");
+        Item item = GSON.fromJson(
+                "{description: " + jsonObject.get("description") + "}", Item.class);
         item.setDate(new Date());
         item.setUser(user);
         Hibernate.getInstance().add(item, array);
@@ -48,6 +49,8 @@ public class GreetingServlet extends HttpServlet {
             throws IOException {
         resp.setContentType("application/json; charset=utf-8");
         OutputStream output = resp.getOutputStream();
+        List<Category> list = Hibernate.getInstance().allCategories();
+        req.setAttribute("list", list);
         String json = GSON.toJson(Hibernate.getInstance().findAll());
         output.write(json.getBytes(StandardCharsets.UTF_8));
         output.flush();
