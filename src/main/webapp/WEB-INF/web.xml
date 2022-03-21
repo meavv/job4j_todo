@@ -13,6 +13,10 @@
     <servlet-class>servlet.ChangeStatusServlet</servlet-class>
   </servlet>
   <servlet>
+    <servlet-name>CategoryServlet</servlet-name>
+    <servlet-class>servlet.CategoryServlet</servlet-class>
+  </servlet>
+  <servlet>
     <servlet-name>RegServlet</servlet-name>
     <servlet-class>servlet.RegServlet</servlet-class>
   </servlet>
@@ -32,6 +36,14 @@
   <servlet-mapping>
     <servlet-name>LogoutServlet</servlet-name>
     <url-pattern>/logout.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>CategoryServlet</servlet-name>
+    <url-pattern>/index</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>GreetingServlet</servlet-name>
+    <url-pattern>/greet</url-pattern>
   </servlet-mapping>
   <filter-mapping>
     <filter-name>AuthFilter</filter-name>
@@ -60,9 +72,5 @@
   <servlet-mapping>
     <servlet-name>GreetingServlet</servlet-name>
     <url-pattern>/check</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>GreetingServlet</servlet-name>
-    <url-pattern>/greet</url-pattern>
   </servlet-mapping>
 </web-app>
