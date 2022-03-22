@@ -1,9 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
-<%@ page import="model.Category" %>
-<%@ page import="store.Hibernate" %>
-<!doctype html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <!-- Required meta tags -->
@@ -26,6 +23,18 @@
 </head>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="script.js"></script>
+<script>
+    $(document).ready(function changeStatus() {
+        $.ajax({
+            type: 'GET',
+            url: 'http://localhost:8081/job4j_todo/category',
+            dataType: 'json'
+        }).done()
+            .fail(function (err) {
+                console.log(err);
+            });
+    });
+</script>
 <body>
 
 <div class="container">

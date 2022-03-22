@@ -13,7 +13,8 @@ import java.util.List;
 public class CategoryServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException, ServletException {
         List<Category> list = Hibernate.getInstance().allCategories();
         req.setAttribute("list", list);
         req.getRequestDispatcher("index.jsp").forward(req, resp);
