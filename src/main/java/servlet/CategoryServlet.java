@@ -17,6 +17,6 @@ public class CategoryServlet extends HttpServlet {
             throws IOException, ServletException {
         List<Category> list = Hibernate.getInstance().allCategories();
         req.setAttribute("list", list);
-        req.getRequestDispatcher("index.jsp").forward(req, resp);
+        req.getRequestDispatcher("create.jsp").forward(req, resp);
     }
 }

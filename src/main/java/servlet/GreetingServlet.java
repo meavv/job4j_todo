@@ -24,7 +24,8 @@ public class GreetingServlet extends HttpServlet {
     private static final Gson GSON = new GsonBuilder().create();
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException, ServletException {
         HttpSession sc = req.getSession();
         User user = (User) sc.getAttribute("user");
         var s = req.getReader().readLine();

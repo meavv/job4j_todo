@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -19,37 +20,37 @@
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <title>TODO</title>
 </head>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="script.js"></script>
+<script>
+    function sendGreeting() {
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:8081/job4j_todo/greet',
+            data: JSON.stringify({
+                description: $('#description').val(),
+                categories: $('#cIds').val()
+            }),
+            dataType: 'json'
+        }).done(window.location="index.jsp").fail(function (err) {
+            console.log(err);
+        });
+    }
+</script>
 <body>
-
-<div class="container">
-    <a style="float: right" class="nav-link" href="<%=request.getContextPath()%>/logout.do"> <c:out value="${user.name}"/>  | Выйти</a>
-    <a style="float: left" class="nav-link" href="<%=request.getContextPath()%>/login.jsp"> Войти</a>
-    <a style="float: left" class="nav-link" href="<%=request.getContextPath()%>/create.do"> Создать Дело</a>
-
-
-    <form>
-        <input type="checkbox" id="check" onclick="filter()">Показать все</input>
-    </form>
-
-    <br>
-    Список дел:
-    <ul id="descriptionList">
-        <form>
-            <table class="table" frame="vsides">
-                <tr>
-                    <th scope="col">Описание</th>
-                    <th scope="col">Статус</th>
-                    <th scope="col">Пользователь</th>
-                    <th scope="col">Категория</th>
-                </tr>
-            </table>
-        </form>
-    </ul>
-</div>
+<form>
+    <div class="form-group">
+        <input type="text" class="form-control" id="description" aria-describedby="descriptionHelp"
+               placeholder="Enter description">
+    </div>
+    <select class="form-control" name="cIds" id="cIds" multiple>
+        <c:forEach items="${list}" var="category">
+            <option value="${category.id}">${category.name}</option>
+        </c:forEach>
+    </select>
+    <button type="button" class="btn btn-primary" onclick="sendGreeting()">Submit</button>
+</form>
 </body>
-
 </html>

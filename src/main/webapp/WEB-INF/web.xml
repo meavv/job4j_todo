@@ -39,7 +39,7 @@
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>CategoryServlet</servlet-name>
-    <url-pattern>/category</url-pattern>
+    <url-pattern>/create.do</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>GreetingServlet</servlet-name>
